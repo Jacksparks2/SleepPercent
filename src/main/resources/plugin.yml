@@ -1,5 +1,5 @@
 name: SleepPercent
 main: io.github.Jacksparks2.SleepPercent.SleepPercent
-author: [Jacksparks2]
+author: [SwarMx]
 description: Sets the time to day when a certain percentage of the server is sleeping.
-version: 0.0.1-SNAPSHOT
+version: 1.0.0
