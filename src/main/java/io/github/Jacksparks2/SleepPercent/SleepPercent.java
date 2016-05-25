@@ -36,12 +36,9 @@ public class SleepPercent extends JavaPlugin
 		int totalPlayers = getServer().getOnlinePlayers().size() - getMiningPlayers();
 		int totalSleeping = this.sleepPlayers.size();
 		
-		float fTotalPlayers = new Float(totalPlayers).floatValue();
-		float fTotalSleeping = new Float(totalSleeping).floatValue();
+		float percent = new Float(totalSleeping).floatValue() / new Float(totalPlayers).floatValue() * 100.0F;
 		
-		float percent = new Float(totalSleeping / (totalPlayers - getMiningPlayers()) * 100.0F).floatValue();
-		
-		getServer().broadcastMessage(((Player)this.sleepPlayers.get(this.sleepPlayers.size() - 1)).getDisplayName() + " " + ChatColor.GOLD + SleepPercent.onSleepText + " " + totalSleeping + "/" + totalPlayers + " (" + fTotalSleeping / fTotalPlayers * 100.0F + "%)");
+		getServer().broadcastMessage(((Player)this.sleepPlayers.get(this.sleepPlayers.size() - 1)).getDisplayName() + " " + ChatColor.GOLD + SleepPercent.onSleepText + " " + totalSleeping + "/" + totalPlayers + " (" + percent + "%)");
 		
 		if (percent >= new Float(SleepPercent.sleepPercent).floatValue())
 		{

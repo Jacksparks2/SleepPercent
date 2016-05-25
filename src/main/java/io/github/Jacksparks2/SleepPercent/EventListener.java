@@ -17,11 +17,17 @@ public class EventListener implements Listener
 	}
 	
 	@EventHandler
-	public void onBedEnter(PlayerBedEnterEvent event)
+	public void onBedEnter(final PlayerBedEnterEvent event)
 	{
-		sleepPercent.sleepPlayers.add(event.getPlayer());
-		if (sleepPercent.getServer().getOnlinePlayers().size() > 1)
-			sleepPercent.testSleep();
+		event.getPlayer().getServer().getScheduler().scheduleSyncDelayedTask(sleepPercent, new Runnable() 
+		{
+			public void run()
+			{
+				sleepPercent.sleepPlayers.add(event.getPlayer());
+				if (sleepPercent.getServer().getOnlinePlayers().size() >= 1)
+					sleepPercent.testSleep();
+			}
+		}, 100L);
 	}
 	
 	@EventHandler

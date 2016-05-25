@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.Jacksparks2</groupId>
   <artifactId>SleepPercent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.2</version>
   
   <build>
       <plugins>
