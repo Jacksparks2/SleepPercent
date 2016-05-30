@@ -16,25 +16,25 @@ public class EventListener implements Listener
 		sleepPercent = plugin;
 	}
 	
+	
 	@EventHandler
 	public void onBedEnter(final PlayerBedEnterEvent event)
 	{
-		event.getPlayer().getServer().getScheduler().scheduleSyncDelayedTask(sleepPercent, new Runnable() 
-		{
-			public void run()
-			{
-				sleepPercent.sleepPlayers.add(event.getPlayer());
-				if (sleepPercent.getServer().getOnlinePlayers().size() >= 1)
-					sleepPercent.testSleep();
-			}
-		}, 100L);
+		sleepPercent.doSleep(event.getPlayer());
 	}
 	
 	@EventHandler
 	public void onBedLeave(PlayerBedLeaveEvent event)
 	{
-		sleepPercent.sleepPlayers.remove(event.getPlayer());
-		if (org.bukkit.Bukkit.getWorld("world").getTime() >= 12000L)
-			sleepPercent.getServer().broadcastMessage(event.getPlayer().getDisplayName() + " " + ChatColor.GOLD + SleepPercent.onWakeText);
+		if (sleepPercent.sleepPlayers.contains(event.getPlayer()))
+		{
+			sleepPercent.sleepPlayers.remove(event.getPlayer());
+			if (org.bukkit.Bukkit.getWorld("world").getTime() >= 12000L)
+				sleepPercent.getServer().broadcastMessage(event.getPlayer().getDisplayName() + " " + ChatColor.GOLD + SleepPercent.onWakeText);
+		}
+		if (sleepPercent.sleepDelayPlayers.contains(event.getPlayer()))
+		{
+			sleepPercent.sleepDelayPlayers.remove(event.getPlayer());
+		}
 	}
 }
