@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class EventListener implements Listener
 {
@@ -36,5 +37,21 @@ public class EventListener implements Listener
 		{
 			sleepPercent.sleepDelayPlayers.remove(event.getPlayer());
 		}
+	}
+
+	@EventHandler
+	public void onPlayerQuit(PlayerQuitEvent event)
+	{
+		if (sleepPercent.sleepPlayers.contains(event.getPlayer()))
+		{
+			sleepPercent.sleepPlayers.remove(event.getPlayer());
+			if (org.bukkit.Bukkit.getWorld("world").getTime() >= 12000L)
+				sleepPercent.getServer().broadcastMessage(event.getPlayer().getDisplayName() + " " + ChatColor.GOLD + SleepPercent.onWakeText);
+		}
+		if (sleepPercent.sleepDelayPlayers.contains(event.getPlayer()))
+		{
+			sleepPercent.sleepDelayPlayers.remove(event.getPlayer());
+		}
+		sleepPercent.testSleep();
 	}
 }

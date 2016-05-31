@@ -77,26 +77,41 @@ public class SleepPercent extends JavaPlugin
 		}
 	}
 	
+	public void testSleep()
+	{
+		getSleepData();
+		if (totalPercent >= (float)sleepPercent)
+		{
+			sleepPlayers.clear();
+			setDay();
+			getServer().broadcastMessage(ChatColor.GOLD + SleepPercent.onMorningText);
+		}
+	}
+	
 	public String getSleepData()
 	{
 		totalSleeping = sleepPlayers.size();
-		totalPlayers = getServer().getOnlinePlayers().size() - getMiningPlayers();
+		totalPlayers = getTotalPlayers();
 		totalPercent = new Float(totalSleeping).floatValue() / new Float(totalPlayers).floatValue() * new Float(100.0F).floatValue();
 		totalPercent = Math.round(totalPercent * new Float(100.0F).floatValue()) / new Float(100.0F).floatValue();
 		return totalSleeping + "/" + totalPlayers + " (" + totalPercent + "%)";
 	}
 	
-	public int getMiningPlayers()
+	public int getTotalPlayers()
 	{
+		int totalPlayers = 0;
 		int miningPlayers = 0;
 		for(Player player : getServer().getOnlinePlayers())
 		{
-			if (player.getLocation().getY() < SleepPercent.groundLevel)
-				miningPlayers++;
+			if (player.getWorld().getEnvironment().equals(World.Environment.NORMAL))
+			{
+				if (player.getLocation().getY() < SleepPercent.groundLevel)
+					miningPlayers++;
+				totalPlayers++;
+			}
 		}
-		return !SleepPercent.includeMiners ? miningPlayers : 0;
+		return SleepPercent.includeMiners ? totalPlayers : totalPlayers - miningPlayers;
 	}
-	
 	
 	public void loadConfig() {
 		getConfig().options().copyDefaults(true);

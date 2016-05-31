@@ -1,7 +1,7 @@
 percent: 50
 groundLevel: 64
 alertEnabled: true
-includeMiners: true
+includeMiners: false
 alerts:
   onMorningText: Wakey, wakey, rise and shine... Good Morning everyone!
   onSleepText: is now sleeping.
